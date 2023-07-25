@@ -1,0 +1,164 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.peerless2012.abv'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+        applicationId "com.peerless2012.abv"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        resValue "integer", "version_code", rootProject.ext.versionCode.toString()
+        resValue "string", "version_name", rootProject.ext.versionName.toString()
+
+        buildConfigField "int", "VERSION_CODE", String.valueOf(rootProject.ext.versionCode)
+        buildConfigField "String", "VERSION_NAME", "\"${rootProject.ext.versionName.toString()}\""
+
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        'app' {
+            java {
+                srcDirs = [
+                        'src/app/java',
+                        'src/share/java'
+                ]
+            }
+            assets {
+                srcDirs = [
+                        'src/app/assets',
+                        'src/share/assets'
+                ]
+            }
+            res {
+                srcDirs = [
+                        'src/app/res',
+                        'src/share/res'
+                ]
+            }
+            manifest {
+
+            }
+        }
+
+        'ott' {
+            java {
+                srcDirs = [
+                        'src/ott/java',
+                        'src/share/java'
+                ]
+            }
+            assets {
+                srcDirs = [
+                        'src/ott/assets',
+                        'src/share/assets'
+                ]
+            }
+            res {
+                srcDirs = [
+                        'src/ott/res',
+                        'src/share/res'
+                ]
+            }
+            manifest {
+
+            }
+        }
+    }
+
+    flavorDimensions "device","type","impl"
+
+    productFlavors {
+
+        // 移动设备
+        "app" {
+            dimension "device"
+        }
+
+        // 电视
+        "ott" {
+            dimension "device"
+        }
+
+        // 原生，开发、调试等
+        'native' {
+            dimension "type"
+            applicationIdSuffix ".native"
+        }
+
+        // cocos引擎
+        'cocos' {
+            dimension "type"
+            applicationIdSuffix ".cocos"
+        }
+
+        // unity引擎
+        'unity' {
+            dimension "type"
+            applicationIdSuffix ".unity"
+
+            ndk {
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
+
+        'system' {
+            dimension "impl"
+            applicationIdSuffix ".system"
+        }
+
+        'ijk' {
+            dimension "impl"
+            applicationIdSuffix ".ijk"
+        }
+
+        'exo' {
+            dimension "impl"
+            applicationIdSuffix ".exo"
+        }
+
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    systemImplementation project(":lib_impl_system")
+    ijkImplementation project(":lib_impl_ijk")
+    exoImplementation project(":lib_impl_exo")
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

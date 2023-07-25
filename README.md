@@ -1,2 +1,2 @@
-# AndroidFlavor
+# AndroidBuildVariants
 Android build variants
