@@ -4,9 +4,13 @@ plugins {
 }
 
 android {
-    namespace 'com.peerless2012.abv.impl.ijk'
+    namespace 'com.peerless2012.abv.mock'
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -16,6 +20,32 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+    }
+
+    flavorDimensions "env"
+
+    productFlavors {
+
+        "dev" {
+            dimension "env"
+            buildConfigField "String", "URL", "\"https://dev.example.com\""
+        }
+
+        "stage" {
+            dimension "env"
+            buildConfigField "String", "URL", "\"https://stage.example.com\""
+        }
+
+        "tf" {
+            dimension "env"
+            buildConfigField "String", "URL", "\"https://example.com\""
+        }
+
+        "product" {
+            dimension "env"
+            buildConfigField "String", "URL", "\"https://example.com\""
+        }
+
     }
 
     buildTypes {
@@ -40,8 +70,7 @@ android {
 }
 
 dependencies {
-    api project(":lib_impl")
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

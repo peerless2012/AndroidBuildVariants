@@ -78,7 +78,7 @@ android {
         }
     }
 
-    flavorDimensions "device","type","impl"
+    flavorDimensions "device","type","impl", "env"
 
     productFlavors {
 
@@ -129,6 +129,26 @@ android {
             applicationIdSuffix ".exo"
         }
 
+        'dev' {
+            dimension "env"
+            applicationIdSuffix ".dev"
+        }
+
+        'stage' {
+            dimension "env"
+            applicationIdSuffix ".stage"
+        }
+
+        'tf' {
+            dimension "env"
+            applicationIdSuffix ".tf"
+        }
+
+        'product' {
+            dimension "env"
+            applicationIdSuffix ".product"
+        }
+
     }
 
     buildTypes {
@@ -151,13 +171,13 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     systemImplementation project(":lib_impl_system")
     ijkImplementation project(":lib_impl_ijk")
     exoImplementation project(":lib_impl_exo")
+    implementation project(":lib_mock")
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
